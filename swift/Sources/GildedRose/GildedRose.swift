@@ -12,6 +12,6 @@ public class GildedRose {
     }
     
     public func updateQuality() {
-        items.forEach { $0.age() }
+        items.forEach { $0.applyAgeToQuality() }
     }
 }
