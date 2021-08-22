@@ -6,12 +6,12 @@ import XCTest
 class AgedBrieTests: XCTestCase {
     
     func test_brie_ItemCreation_Returns_CorrectItemType() {
-        let item = Item(name: "Aged Brie", sellIn: 2, quality: 0)
+        let item = SellableItem(name: "Aged Brie", sellIn: 2, quality: 0)
         XCTAssertEqual(item.itemType , .agedBrie)
     }
     
     func test_brie_ItemAging_AgesApppriately() {
-        let item = Item(name: "Aged Brie", sellIn: 2, quality: 0)
+        let item = SellableItem(name: "Aged Brie", sellIn: 2, quality: 0)
         
         item.applyAgeToQuality()
         XCTAssertEqual(item.sellIn , 1)
@@ -19,7 +19,7 @@ class AgedBrieTests: XCTestCase {
     }
 
     func test_brie_ItemAging_AgesDoublyWell_AfterExpiry() {
-        let item = Item(name: "Aged Brie", sellIn: 0, quality: 0)
+        let item = SellableItem(name: "Aged Brie", sellIn: 0, quality: 0)
         
         item.applyAgeToQuality()
         XCTAssertEqual(item.sellIn , -1)

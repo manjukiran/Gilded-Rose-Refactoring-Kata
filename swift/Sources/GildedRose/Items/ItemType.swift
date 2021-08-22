@@ -9,7 +9,6 @@ import Foundation
 
 /// Item Type allows us to classify the object without having to check for string values all over the code. 
 public enum ItemType: String {
-    
     case normalItem
     case conjuredItem
     case agedBrie = "Aged Brie"

@@ -11,8 +11,14 @@ public protocol AgingItem: Item {
     func applyAgeToQuality()
 }
 
-/// Making an extension to the un-modifiable Item class to be able to apply business logic for aging
-extension Item: AgingItem {
+/// Creating a child of the un-modifiable `Item` class to be able to apply efficient business logic for aging
+public class SellableItem: Item, AgingItem {
+
+    /// Returns Item Type based on the `name` variable;
+    /// This optimises the computation for the array as we dont need to run the switch statement hundreds of times
+    lazy var itemType: ItemType = {
+        return ItemType.create(from: name)
+    }()
     
     public func applyAgeToQuality() {
         guard itemType != .sulfuras else { return }
@@ -29,15 +35,9 @@ extension Item: AgingItem {
     
 }
 
-public extension Item {
-    
-    /// Returns Item Type based on the `name` variable
-    var itemType: ItemType {
-        return ItemType.create(from: name)
-    }
+private extension SellableItem {
     
     /// Provides an age factor based on the type and rules specified in the reqirement
-    
     var agingFactor: Int {
         switch itemType {
         case .normalItem: // Degrades normally
