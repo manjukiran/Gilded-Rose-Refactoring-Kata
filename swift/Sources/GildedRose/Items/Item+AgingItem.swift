@@ -7,13 +7,14 @@
 
 import Foundation
 
-protocol AgingItem: Item {
+public protocol AgingItem: Item {
     func applyAgeToQuality()
 }
 
+/// Making an extension to the un-modifiable Item class to be able to apply business logic for aging
 extension Item: AgingItem {
     
-    func applyAgeToQuality() {
+    public func applyAgeToQuality() {
         guard itemType != .sulfuras else { return }
         let expiryDateFactor = self.sellIn <= 0 ? 2 : 1
         var newQuality = self.quality - (agingFactor * expiryDateFactor)
@@ -28,21 +29,24 @@ extension Item: AgingItem {
     
 }
 
-extension Item {
+public extension Item {
     
+    /// Returns Item Type based on the `name` variable
     var itemType: ItemType {
         return ItemType.create(from: name)
     }
     
+    /// Provides an age factor based on the type and rules specified in the reqirement
+    
     var agingFactor: Int {
         switch itemType {
-        case .normalItem:
+        case .normalItem: // Degrades normally
             return 1
-        case .conjuredItem: // Degrades in Quality twice as fast as normal items
+        case .conjuredItem: // Degrades twice as fast as normal items
             return 2
-        case .agedBrie: // Increases in quality
+        case .agedBrie: // Increases in quality normally
             return -1
-        case .sulfuras: // Sulfuras doesnt age // Code unnecessary but for posterity
+        case .sulfuras: // Sulfuras doesnt age // Code unnecessary but placed for posterity and future changes
             return 0
         case .backstagePasses:
             switch sellIn {
